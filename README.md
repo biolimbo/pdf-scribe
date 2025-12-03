@@ -17,52 +17,162 @@ A powerful CLI tool for transcribing scanned PDF documents to markdown using OCR
 
 ## Installation
 
-### Prerequisites
+### System Dependencies
 
-- Python 3.10+
-- Tesseract OCR (for Tesseract engine)
-- Poppler (for PDF to image conversion)
+Before installing pdf-scribe, you need two system dependencies:
 
-#### macOS
+| Dependency | Purpose | Required For |
+|------------|---------|--------------|
+| **Tesseract OCR** | Optical character recognition engine | `--engine tesseract` (default) |
+| **Poppler** | PDF to image conversion | All PDF processing |
+
+#### macOS (Homebrew)
 
 ```bash
+# Install Tesseract and Poppler
 brew install tesseract poppler
-# For Spanish language support:
+
+# Install ALL language packs (recommended)
 brew install tesseract-lang
+
+# Or install specific languages only
+brew install tesseract-lang  # Includes all languages
 ```
 
 #### Ubuntu/Debian
 
 ```bash
+# Install Tesseract and Poppler
+sudo apt-get update
 sudo apt-get install tesseract-ocr poppler-utils
-# For Spanish:
-sudo apt-get install tesseract-ocr-spa
+
+# Install ALL language packs
+sudo apt-get install tesseract-ocr-all
+
+# Or install specific languages
+sudo apt-get install tesseract-ocr-spa  # Spanish
+sudo apt-get install tesseract-ocr-fra  # French
+sudo apt-get install tesseract-ocr-deu  # German
+sudo apt-get install tesseract-ocr-por  # Portuguese
 ```
 
-### Setup
+#### Windows
+
+1. **Tesseract**: Download installer from [UB-Mannheim](https://github.com/UB-Mannheim/tesseract/wiki)
+   - Run the installer
+   - **Important**: Check "Add to PATH" during installation
+   - Select additional languages in the installer
+
+2. **Poppler**: Download from [poppler-windows](https://github.com/oschwartz10612/poppler-windows/releases)
+   - Extract to `C:\Program Files\poppler`
+   - Add `C:\Program Files\poppler\bin` to your PATH
+
+#### Verify Installation
+
+```bash
+# Check Tesseract
+tesseract --version
+# Should show: tesseract 5.x.x
+
+# Check available languages
+tesseract --list-langs
+# Should show: eng, spa, fra, etc.
+
+# Check Poppler
+pdftoppm -v
+# Should show: pdftoppm version x.x.x
+```
+
+#### Common Language Codes
+
+| Code | Language |
+|------|----------|
+| `eng` | English (default) |
+| `spa` | Spanish |
+| `fra` | French |
+| `deu` | German |
+| `por` | Portuguese |
+| `ita` | Italian |
+| `rus` | Russian |
+| `chi_sim` | Chinese (Simplified) |
+| `chi_tra` | Chinese (Traditional) |
+| `jpn` | Japanese |
+| `kor` | Korean |
+| `ara` | Arabic |
+
+Use multiple languages with `+`: `--lang eng+spa`
+
+### Python Setup
+
+**Requirements**: Python 3.10 or higher
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/pdf-scribe.git
 cd pdf-scribe
+```
 
+#### Virtual Environment (Recommended)
+
+Using a virtual environment keeps dependencies isolated and avoids conflicts with other projects.
+
+**macOS/Linux:**
+```bash
+# Create virtual environment
+python3 -m venv .venv
+
+# Activate it (run this every time you open a new terminal)
+source .venv/bin/activate
+
+# Your prompt should now show (.venv)
+```
+
+**Windows (PowerShell):**
+```powershell
 # Create virtual environment
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Install dependencies
+# Activate it
+.venv\Scripts\Activate.ps1
+
+# If you get an execution policy error, run:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+**Windows (Command Prompt):**
+```cmd
+python -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+#### Install Dependencies
+
+```bash
+# Make sure your venv is activated (you should see (.venv) in your prompt)
+
+# Install core dependencies
 pip install -r requirements.txt
 
-# For Claude Vision support
-pip install anthropic python-dotenv
+# That's it! Claude Vision dependencies are included in requirements.txt
+```
+
+#### Deactivate Virtual Environment
+
+When you're done:
+```bash
+deactivate
 ```
 
 ### API Key (for Claude Vision)
+
+Only needed if using `--engine claude`:
 
 ```bash
 cp .env.example .env
 # Edit .env and add your Anthropic API key
 ```
+
+Get your API key at: https://console.anthropic.com/
 
 ## Quick Start
 
