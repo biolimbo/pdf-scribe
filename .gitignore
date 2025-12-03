@@ -1,0 +1,45 @@
+# Virtual environments
+venv/
+.venv/
+
+# Input folder contents (keep README)
+input/*
+!input/README.md
+
+# Output folder contents (keep README)
+output/*
+!output/README.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+
+# Anthropic / Claude Code
+.claude
+*_cache*.json
