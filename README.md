@@ -2,7 +2,9 @@
 
 📄➡️✨ Feed it crusty scanned PDFs, get clean markdown. Tesseract when you're broke, Claude when you're bougie.
 
-A powerful CLI tool for transcribing scanned PDF documents to markdown using OCR. Supports both Tesseract (free, local) and Claude Vision AI (superior quality for degraded documents).
+A powerful CLI tool for transcribing scanned PDF documents to markdown using OCR. Built specifically for **difficult documents that defeat traditional OCR** – faded text, low-resolution scans, typewriter fonts, highlighter marks, and decades-old legal paperwork.
+
+Supports both **Tesseract** (free, local) for clean modern scans, and **Claude Vision AI** for everything else. When your documents look like they survived a flood, a fire, and a fax machine, Claude Vision will still read them.
 
 ## Features
 
@@ -14,6 +16,46 @@ A powerful CLI tool for transcribing scanned PDF documents to markdown using OCR
 - **Auto-Rotation** - Detects and corrects page orientation
 - **Streaming Output** - Results saved page-by-page as processing happens
 - **Flexible Page Selection** - Process specific pages, ranges, or just the first N pages
+
+## When to Use Claude Vision
+
+**TL;DR**: If Tesseract gives you garbage, Claude Vision will probably nail it.
+
+Traditional OCR engines like Tesseract work great on clean, modern scans. But real-world documents are often a mess. **Claude Vision dramatically outperforms Tesseract** on:
+
+| Document Type | Tesseract | Claude Vision |
+|--------------|-----------|---------------|
+| Clean modern scans | ✅ Great | ✅ Great |
+| Faded or low-contrast text | ⚠️ Struggles | ✅ Excellent |
+| Low resolution scans | ⚠️ Poor | ✅ Handles well |
+| Highlighter marks / annotations | ❌ Fails | ✅ Ignores marks, reads text |
+| Typewriter fonts | ⚠️ Hit or miss | ✅ Excellent |
+| Degraded legal documents | ❌ Often unusable | ✅ Accurate |
+| Noisy backgrounds / speckles | ⚠️ Needs preprocessing | ✅ Handles natively |
+| Mixed fonts / handwriting | ❌ Poor | ✅ Good |
+
+### Real-World Example
+
+This tool was built to transcribe **decades-old legal documents** that were:
+- Scanned at low resolution from microfilm
+- Typed on manual typewriters with uneven ink
+- Covered in red/yellow highlighter marks
+- Faded and noisy with age
+
+Tesseract produced mostly unusable output even with aggressive preprocessing. **Claude Vision transcribed them nearly perfectly**, understanding context to fill in degraded characters and ignoring highlighter marks entirely.
+
+### Cost vs Quality Trade-off
+
+| Engine | Cost | Speed | Quality on Bad Docs |
+|--------|------|-------|---------------------|
+| Tesseract | Free | Fast | Poor |
+| Claude Haiku (`--cheapo`) | ~$0.001/page | Fast | Good |
+| Claude Sonnet (default) | ~$0.01/page | Medium | Excellent |
+| Claude Opus (`--expensive`) | ~$0.05/page | Slower | Best |
+
+> ⚠️ **DPI affects AI cost**: Higher DPI = larger images = more tokens = higher cost. The default 150 DPI works well for most documents. Only increase DPI (`--dpi 300`) if you're seeing quality issues. At 300 DPI, expect roughly 4x the cost per page.
+
+**Recommendation**: Start with `--engine claude` (Sonnet) at default DPI. Use `--cheapo` for bulk processing of moderately difficult docs. Only use `--expensive` or high DPI for the most challenging documents.
 
 ## Installation
 
