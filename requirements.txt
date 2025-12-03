@@ -1,0 +1,8 @@
+# Core dependencies
+pdf2image>=1.16.0
+Pillow>=10.0.0
+pytesseract>=0.3.10
+
+# For Claude Vision AI engine
+anthropic>=0.18.0
+python-dotenv>=1.0.0
